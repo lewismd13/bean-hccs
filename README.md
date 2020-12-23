@@ -3,6 +3,8 @@ This is a Kingdom of Loathing script originally written by `worthawholebean (#19
 To install:
 `svn checkout https://github.com/lewismd13/bean-hccs/branches/DNA/KoLmafia`
 
+This is me testing stuff lalalala
+
 Notes:
 - The script assumes that you have Sweet Synthesis and a bunch of IotMs, but none of them are strictly necessary; if you are missing more than one or two of the leveling ones in particular (Prof/Kramco, NEP, Garbage Tote), the script will fail to level enough to cap the stat tests. That will very likely mean missing daycount. If you are missing Synth, you can compensate by wishing for Experimental Effect G-9 or New and Improved to replace the +Myst buff (depending on the day), and Different Way of Seeing Things to replace the XP buff. You can still make 1-day using that plan but it will be tight.
 - Besides leveling, the Genie Bottle and Pizza Cube each save a ridiculous number of turns with wishes.
