@@ -85,7 +85,7 @@ buffer m_skill(buffer macro, skill sk) {
 }
 
 buffer m_item(buffer macro, item it) {
-    return macro.m_step(`item {it.name}`);
+    return macro.m_step(`use {it.name}`);
 }
 
 buffer m_repeat(buffer macro) {
@@ -161,6 +161,7 @@ string MODE_FREE_KILL = "freekill";
 string MODE_KILL = "kill";
 string MODE_OTOSCOPE = "otoscope";
 string MODE_RUN_UNLESS_FREE = "run";
+string MODE_MISTFORM = "mist";
 
 void set_hccs_combat_mode(string mode) {
     set_property("_hccsCombatMode", mode);
@@ -204,7 +205,7 @@ monster[string] banished_monsters() {
 }
 
 boolean used_banisher_in_zone(monster[string] banished, string banisher, location loc) {
-    print(`Checking to see if we've used {banisher} in {loc}.`);
+    print(`Checking to see if we\'ve used {banisher} in {loc}.`);
     if (!(banished contains banisher)) return false;
     print(`Used it to banish {banished[banisher].name}`);
     return (loc.get_location_monsters() contains banished[banisher]);
@@ -271,9 +272,9 @@ void main(int initround, monster foe, string page) {
                 .m_repeat_submit();
         } else if (have_skill($skill[Chest X-Ray]) && get_property_int("_chestXRayUsed") < 3) {
             use_skill(1, $skill[Chest X-Ray]);
-        } else if (have_skill($skill[Shattering Punch]) && get_property_int("_shatteringPunchUsed") < 3) {
+        } /* else if (have_skill($skill[Shattering Punch]) && get_property_int("_shatteringPunchUsed") < 1) {
             use_skill(1, $skill[Shattering Punch]);
-        } else if (have_skill($skill[Gingerbread Mob Hit]) && !get_property_boolean("_gingerbreadMobHitUsed")) {
+        } */ else if (have_skill($skill[Gingerbread Mob Hit]) && !get_property_boolean("_gingerbreadMobHitUsed")) {
             use_skill(1, $skill[Gingerbread Mob Hit]);
         }
     } else if (mode == MODE_KILL) {
@@ -322,7 +323,13 @@ void main(int initround, monster foe, string page) {
         } else {
             abort("Something went wrong.");
         }
-    } else {
+    } else if (mode == MODE_MISTFORM) {
+		m_new()
+				.m_skill($skill[Meteor Shower])
+				.m_skill($skill[Become a Cloud of Mist])
+                .m_skill($skill[Use the Force])
+				.m_repeat_submit();
+	} else {
         abort("Unrecognized mode.");
     }
 
