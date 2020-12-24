@@ -15,38 +15,38 @@ I have a ridiculous pile of IotMs and use most of them in this script. You can r
 
 IotMs that this script uses include, but are not limited to:
 
-Peppermint Garden
-Little Geneticist DNA-splicing lab
-Melodramedary
-Tome of Clip Art Summoning
-Libram of BrickOs
-Clan VIP key
-Airplane Charter to Dinseylandfill
-Airplane Charter to That 70s Volcano
-Trick-or-treating tot
-Deck of Every Card
-Chateau Mantegna
-Machine Elf
-Stocking Mimic
-Snojo
-Pocket Professor
-Kramco Sausage-o-matic
-January's Garbage Tote
-Neverending Party
-Witchess Set
-Source Terminal
-Garbage Fire
-hewn moon-rune spoon
-li'l doc bag
-Boxing Daycare
-Distant Woods Getaway
-Powerful Glove
-Pocket Meteor Guide
-Eight-days-a-week pillkeeper
-Bastille Battalion
-Songboom Boombox
-Vampyric Cloake
-box o' ghosts
+- Peppermint Garden
+- Little Geneticist DNA-splicing lab
+- Melodramedary
+- Tome of Clip Art Summoning
+- Libram of BrickOs
+- Clan VIP key
+- Airplane Charter to Dinseylandfill
+- Airplane Charter to That 70s Volcano
+- Trick-or-treating tot
+- Deck of Every Card
+- Chateau Mantegna
+- Machine Elf
+- Stocking Mimic
+- Snojo
+- Pocket Professor
+- Kramco Sausage-o-matic
+- January's Garbage Tote
+- Neverending Party
+- Witchess Set
+- Source Terminal
+- Garbage Fire
+- hewn moon-rune spoon
+- li'l doc bag
+- Boxing Daycare
+- Distant Woods Getaway
+- Powerful Glove
+- Pocket Meteor Guide
+- Eight-days-a-week pillkeeper
+- Bastille Battalion
+- Songboom Boombox
+- Vampyric Cloake
+- box o' ghosts
 
 The script is fine to run twice; if it breaks somewhere, fix the problem manually and then the script should start where it left off. I have tested it, but not extensively, so please understand that this code is not at the same quality level as autoscend. It may very well mess up spectacularly, and it has done so at times in my runs. You have been warned.
 

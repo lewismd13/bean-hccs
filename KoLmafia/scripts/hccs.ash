@@ -964,12 +964,13 @@ if (!test_done(TEST_HP)) {
 		set_hccs_combat_mode(MODE_NULL);
 		if ((available_amount($item[abstraction: thought]) == 0) && (available_amount($item[abstraction: certainty]) == 0) && (get_property('_machineTunnelsAdv') < 5)) {
 			set_auto_attack('melfgetthought');
-			adventure(1, $location[the deep machine tunnels]);
+			adv1($location[the deep machine tunnels], -1, "");
+            set_auto_attack(0);
 		} else if  ((available_amount($item[abstraction: thought]) >= 1) && (available_amount($item[abstraction: certainty]) == 0) && (get_property('_machineTunnelsAdv') < 5)) {
 			set_auto_attack('melfgetcertainty');
-			adventure(1, $location[the deep machine tunnels]);
+			adv1($location[the deep machine tunnels], -1, "");
+            set_auto_attack(0);
 		} else {
-		    set_auto_attack(0);
 		    adventure_kill($location[the deep machine tunnels]);
         }
     }
