@@ -1,0 +1,60 @@
+- HCCS_LOV_tunnel
+
+if monstername "lov enforcer"
+   attack 
+   repeat
+endif
+
+if monstername "lov engineer"
+   skill saucegeyser
+   repeat
+endif
+
+skill curse of weaksauce
+skill saucestorm
+repeat
+
+- HCCS_Spit
+
+skill meteor shower
+skill 7340
+skill use the force
+
+- melfgetthought
+
+if monstername "Thinker of Thoughts" && (!hascombatitem 8709)
+     skill 173
+endif
+
+while (monstername "Performer of Actions" || monstername "Perceiver of Sensations") && (!hascombatitem 8709)
+    skill 7290
+    skill 7245
+endwhile
+
+if monstername "Thinker of Thoughts" && (!hascombatitem 8709)
+     skill 173
+endif
+
+- melfgetcertainty
+
+while (monstername "Performer of Actions" || monstername "thinker of thoughts") && (hascombatitem 8709)
+    skill macrometeorite
+    skill summon love mosquito
+endwhile
+
+if ((monstername "Perceiver of Sensations") && (hascombatitem 8709))
+     use 8709
+     skill saucestorm
+     repeat
+endif
+
+- witchess witch
+
+attack
+repeat
+
+- HCCS_DNA_RUN
+
+skill extract
+use DNA extraction syringe
+runaway
