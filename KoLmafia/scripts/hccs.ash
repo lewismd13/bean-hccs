@@ -20,6 +20,8 @@ int TEST_COIL_WIRE = 11;
 
 // test order will be stats, hot, item, NC, Fam, weapon, spell
 
+int START_TIME = gametime_to_int();
+
 familiar default_familiar = $familiar[melodramedary];
 item default_familiar_equipment = $item[dromedary drinking helmet];
 
@@ -65,33 +67,6 @@ void wish_effect(effect ef) {
         print('Already have effect ' + ef.name + '.');
     }
 }
-/*
-boolean pull_if_possible(int quantity, item it, int max_price) {
-    if (pulls_remaining() > 0) {
-        int quantity_pull = max(0, quantity - available_amount(it));
-        if (shop_amount(it) > 0) {
-            take_shop(min(shop_amount(it), quantity_pull), it);
-        }
-        if (storage_amount(it) < quantity_pull) {
-            buy_using_storage(quantity_pull - storage_amount(it), it, max_price);
-        }
-        cli_execute(`pull {quantity_pull} {it.name}`);
-        return true;
-    } else return false;
-}
-
-void ensure_pull_effect(effect ef, item it) {
-    if (have_effect(ef) == 0) {
-        if (available_amount(it) > 0 || pull_if_possible(1, it, 50000)) ensure_effect(ef);
-    }
-}
-
-void ensure_pulled(item it, int max_price) {
-    if (available_amount(it) == 0) {
-        pull_if_possible(1, it, max_price);
-    }
-}
-*/
 
 void gene_tonic(string ph){
 	
@@ -464,23 +439,17 @@ if (!test_done(TEST_COIL_WIRE)) {
     }
 
     // Campsite
-    if (have_effect($effect[That's Just Cloud-Talk, Man]) == 0) {
+    if (have_effect($effect[That\'s Just Cloud-Talk, Man]) == 0) {
         visit_url('place.php?whichplace=campaway&action=campaway_sky');
     }
 
     // Depends on Ez's Bastille script.
-    cli_execute('bastille myst brutalist'); */
+    cli_execute('bastille myst brutalist'); 
 
     // Upgrade saber for fam wt
     visit_url('main.php?action=may4');
     run_choice(4);
-/*
-    // Vote.
-    visit_url('place.php?whichplace=town_right&action=townright_vote');
-    visit_url('choice.php?option=1&whichchoice=1331&g=2&local%5B%5D=2&local%5B%5D=3');
-    // Make sure initiative-tracking works.
-    visit_url('place.php?whichplace=town_right&action=townright_vote');
-*/
+
     // Put on some regen gear
     equip($item[Iunion Crown]);
     equip($slot[shirt], $item[none]);
@@ -742,10 +711,6 @@ if (!test_done(TEST_HP)) {
         if (available_amount($item[tomato]) == 0) error("No tomato!");
     }
 */
-    /* for i from 1 to 2 {
-        if (available_amount($item[stench powder]) + available_amount($item[lotion of stench]) > 0) break;
-        if ()
-    } */
 
     // Fruits in skeleton store (Saber YR)
     boolean missing_ointment = available_amount($item[ointment of the occult]) == 0 && available_amount($item[grapefruit]) == 0 && have_effect($effect[Mystically Oiled]) == 0;
@@ -843,38 +808,7 @@ if (!test_done(TEST_HP)) {
 
     equip($item[LOV epaulettes]);
 
-    /*
-    // LOV Tunnel in ts, needs to be turned into usable ash
-    if (!getPropertyBoolean('_loveTunnelUsed')) {
-    useDefaultFamiliar();
-    const macro = Macro.mIf(Macro.monster($monster`LOV Enforcer`), Macro.attack())
-      .mIf(Macro.monster($monster`LOV Engineer`), Macro.skillRepeat($skill`Saucegeyser`))
-      .mIf(Macro.monster($monster`LOV Equivocator`), Macro.pickpocket().kill());
-    setChoice(1222, 1); // Entrance
-    setChoice(1223, 1); // Fight LOV Enforcer
-    setChoice(1224, 2); // LOV Epaulettes
-    setChoice(1225, 1); // Fight LOV Engineer
-    setChoice(1226, 2); // Open Heart Surgery
-    setChoice(1227, 1); // Fight LOV Equivocator
-    setChoice(1228, 3); // Take chocolate
-
-    adventureMacro($location`The Tunnel of L.O.V.E.`, macro);
-    if (handlingChoice()) throw 'Did not get all the way through LOV.';
-    visitUrl('choice.php');
-    if (handlingChoice()) throw 'Did not get all the way through LOV.';
-    }
-    // not sure I want to use the chocolate?
-    if (itemAmount($item`LOV Extraterrestrial Chocolate`) > 0) {
-        use($item`LOV Extraterrestrial Chocolate`);
-    }
-
-  equip($item`LOV Epaulettes`);
-*/
-
-
-
-	// spend 5 turns in DMT, getting abstraction: joy and hopefully certainty
-	
+	// spend 5 turns in DMT, getting abstraction: joy and hopefully certainty	
     while (get_property('_machineTunnelsAdv') < 5) {
 		use_familiar($familiar[machine elf]);
 		set_hccs_combat_mode(MODE_NULL);
@@ -961,7 +895,7 @@ if (!test_done(TEST_HP)) {
     }
 
     // Visiting the Ruined House
-    visit_url('place.php?whichplace=desertbeach&action=db_nukehouse');
+    //  visit_url('place.php?whichplace=desertbeach&action=db_nukehouse');
 
     use_skill(1, $skill[Advanced Cocktailcrafting]);
     use_skill(1, $skill[Pastamastery]);
@@ -1217,54 +1151,14 @@ if (!test_done(TEST_HOT_RES)) {
 	use_default_familiar();
     fight_sausage_if_guaranteed();
 
-    /* if (have_effect($effect[Feeling No Pain]) == 0) {
-        if (my_meat() < 500) {
-            error('Not enough meat. Please autosell stuff.');
-        }
-        if (my_inebriety() != 11) {
-            error('Too drunk. Something is wrong.');
-        }
-        ensure_ode(2);
-        cli_execute('drink 1 Ish Kabibble');
-    } */
-
     // Make sure no moon spoon.
     equip($slot[acc1], $item[Eight Days a Week Pill Keeper]);
     equip($slot[acc2], $item[Powerful Glove]);
     equip($slot[acc3], $item[Lil\' Doctor&trade; Bag]);
 
-/*if (available_amount($item[heat-resistant gloves]) == 0) {
-        if (available_amount($item[photocopied monster]) == 0) {
-            if (get_property_boolean('_photocopyUsed')) error('Already used fax for the day.');
-            // cli_execute('faxbot factory worker');
-            // faxbot($monster[factory worker (female)], 'cheesefax');
-            chat_private('cheesefax', 'factory worker');
-            for i from 1 to 5 {
-                wait(3);
-                cli_execute('fax receive');
-                if (get_property('photocopyMonster') == 'factory worker') break;
-                // otherwise got the wrong monster, put it back.
-                cli_execute('fax send');
-            }
-            if (available_amount($item[photocopied monster]) == 0) error('Failed to fax in factory worker.');
-        }
-        cli_execute('mood apathetic');
-        equip($item[Fourth of May Cosplay Saber]);
-        set_hccs_combat_mode(MODE_CUSTOM,
-            m_new()
-                .m_skill($skill[Become a Cloud of Mist])
-                .m_skill($skill[Meteor Shower])
-                .m_skill($skill[Use the Force]));
-        set_property("choiceAdventure1387", "3");
-        use(1, $item[photocopied monster]);
-        set_hccs_combat_mode(MODE_NULL);
-    }
-    autosell(1, $item[very hot lunch]);
-*/
-
 	if (available_amount($item[heat-resistant gloves]) == 0) {
 		cli_execute('mood apathetic');
-        adv1($location[lavaco lamp factory], -1, '');
+        adv1($location[LavaCo&trade; Lamp Factory], -1, '');
 		equip($item[Fourth of May Cosplay Saber]);
 		equip($item[vampyric cloake]);
 		set_hccs_combat_mode(MODE_MISTFORM);
@@ -1323,10 +1217,6 @@ if (!test_done(TEST_HOT_RES)) {
         ensure_potion_effect($effect[Sleazy Hands], $item[lotion of sleaziness]);
     }
 
-    /* if (get_property_int('_genieWishesUsed') < 3 || available_amount($item[pocket wish]) > 0) {
-        // wish_effect($effect[Fireproof Lips]);
-    } */
-
     ensure_effect($effect[Elemental Saucesphere]);
     ensure_effect($effect[Astral Shell]);
 
@@ -1383,20 +1273,11 @@ if (!test_done(TEST_HOT_RES)) {
     // Mafia sometimes can't figure out that multiple +weight things would get us to next tier.
     maximize('hot res, 0.01 familiar weight', false);
 
-    // OK to waste a couple turns here
-/*    if (round(numeric_modifier('hot resistance')) + 9 <= 62) {
-        ensure_pull_effect($effect[Fireproof Lips], $item[SPF 451 lip balm]);
-    }
-    if (round(numeric_modifier('hot resistance')) + 5 <= 60) {
-        ensure_pull_effect($effect[Good Chance of Surviving Hell], $item[infernal snowball]);
-    }
-*/
-
 /*	if ((have_effect($effect[Rainbowolin]) == 0) && (round(numeric_modifier('hot resistance')) < 59)) {
         cli_execute('pillkeeper elemental');
     }
 */
-    if (round(numeric_modifier('hot resistance')) < 59) {
+    if (round(numeric_modifier('hot resistance')) < 58) {
         error('Something went wrong building hot res.');
     }
 
@@ -1460,15 +1341,6 @@ if (!test_done(TEST_ITEM)) {
             m_new().m_skill($skill[Become a Bat]).m_skill($skill[Reflex Hammer]));
     }
 
-    // Make A Light that Never Goes Out
-    /* if (available_amount($item[A Light That Never Goes Out]) == 0) {
-        // int count = 2 - available_amount($item[A Light That Never Goes Out]);
-        ensure_item(1, $item[lump of Brituminous coal]);
-        ensure_item(1, $item[third-hand lantern]);
-        ensure_item(1, $item[tenderizing hammer]);
-        create(1, $item[A Light That Never Goes Out]);
-    } */
-
     if (!get_property_boolean('_clanFortuneBuffUsed')) {
         ensure_effect($effect[There\'s No N In Love]);
     }
@@ -1481,13 +1353,6 @@ if (!test_done(TEST_ITEM)) {
     effect[int] subsequent;
     synthesis_plan($effect[Synthesis: Collection], subsequent);
 
-    /* if (get_campground() contains $item[Asdon Martin keyfob]) {
-        ensure_asdon_effect($effect[Driving Observantly]);
-    } else {
-        // Use cyclops eyedrops.
-        ensure_pull_effect($effect[One Very Clear Eye], $item[cyclops eyedrops]);
-    } */
-
 	// see what class we are, maybe a couple other buffs 
 	if (my_class() == $class[pastamancer]) {
 		cli_execute('barrelprayer buff');
@@ -1497,6 +1362,7 @@ if (!test_done(TEST_ITEM)) {
 
     // Use bag of grain.
     // 	ensure_effect($effect[Nearly All-Natural]);
+
     ensure_effect($effect[Steely-Eyed Squint]);
 
     if (get_property_int('_campAwaySmileBuffs') == 1) {
@@ -1508,8 +1374,6 @@ if (!test_done(TEST_ITEM)) {
 	equip($item[9140]); // ninja costume for 150% item
 
     maximize('item, 2 booze drop, -equip broken champagne bottle, -equip surprisingly capacious handbag', false);
-
-    // wish_effect($effect[Infernal Thirst]);
 	
 	// cli_execute('modtrace item');
 	// abort();
@@ -1528,7 +1392,7 @@ if (!test_done(TEST_NONCOMBAT)) {
         use_familiar($familiar[God Lobster]);
         // Get -combat buff.
         set_property('choiceAdventure1310', '2');
-        equip($item[God Lobster's Ring]);
+        equip($item[God Lobster\'s Ring]);
         visit_url('main.php?fightgodlobster=1');
         set_hccs_combat_mode(MODE_KILL);
         run_combat();
@@ -1538,9 +1402,6 @@ if (!test_done(TEST_NONCOMBAT)) {
 	
 	// setting KGB to NC, relies on Ezandora's script
 	cli_execute('briefcase e -combat');
-	
-	// wish for disquiet riot
-	// wish_effect($effect[Disquiet Riot]);
 	
     // Pool buff. Should fall through to weapon damage.
     ensure_effect($effect[Billiards Belligerence]);
@@ -1559,19 +1420,11 @@ if (!test_done(TEST_NONCOMBAT)) {
     // Rewards
     ensure_effect($effect[Throwing Some Shade]);
     // ensure_effect($effect[A Rose by Any Other Material]);
-
-    /* if (get_campground() contains $item[Asdon Martin keyfob]) {
-        ensure_asdon_effect($effect[Driving Stealthily]);
-    } else {
-        wish_effect($effect[Disquiet Riot]);
-    } */
 	
 	// wish for healthy green glow, should fall through
 	wish_effect($effect[healthy green glow]);
 	
     use_familiar($familiar[Disgeist]);
-
-    // if (get_property('_horsery') != 'dark horse') cli_execute('horsery dark');
 
     // Pastamancer d1 is -combat.
 	if (my_class() == $class[pastamancer]) {	
@@ -1579,12 +1432,7 @@ if (!test_done(TEST_NONCOMBAT)) {
 	}
 
     maximize('-combat, 0.01 familiar weight', false);
-/*
-    if (have_effect($effect[Meteor Showered]) == 0) {
-        adventure_macro($location[Noob Cave],
-            m_new().m_skill($skill[Meteor Shower]).m_skill($skill[Use the Force]));
-    }
-*/
+
     if (round(numeric_modifier('combat rate')) > -40) {
         error('Not enough -combat to cap.');
     }
@@ -1613,8 +1461,6 @@ if (!test_done(TEST_FAMILIAR)) {
 	ensure_effect($effect[robot friends]);
 	ensure_effect($effect[human-machine hybrid]);
 	
-    // ensure_pull_effect($effect[Robot Friends], $item[silver face paint]);
-
 	/* if ((available_amount($item[abstraction: joy]) > 0) && (have_effect($effect[joy]) == 0)) {
 		chew($item[abstraction: joy]);
 	} */
@@ -1631,8 +1477,6 @@ if (!test_done(TEST_FAMILIAR)) {
             m_new().m_skill($skill[Meteor Shower]).m_skill($skill[Use the Force]));
     }
 
-   //  pull_if_possible(1, $item[Great Wolf's beastly trousers], 0);
-	
 	use_familiar($familiar[exotic parrot]);
 	
     maximize('familiar weight', false);
@@ -1725,6 +1569,7 @@ if (!test_done(TEST_WEAPON)) {
 			use(1, $item[photocopied monster]);
 			set_hccs_combat_mode(MODE_NULL);
 			set_auto_attack(0);
+            cli_execute('set camelSpit = 0');
 			use_default_familiar();
 		} else {
 			print('your camel is not full enough', 'green');
@@ -1803,9 +1648,6 @@ if (!test_done(TEST_WEAPON)) {
     // this is just an assert, effectively.
     ensure_effect($effect[Meteor Showered]);
 
-    // wish_effect($effect[Pyramid Power]);
-    // wish_effect($effect[Wasabi With You]);
-
     ensure_effect($effect[Bow-Legged Swagger]);
 
     // Get flimsy hardwood scraps.
@@ -1821,17 +1663,6 @@ if (!test_done(TEST_WEAPON)) {
     int weapon_turns() {
         return 60 - floor(numeric_modifier('weapon damage') / 25 + 0.001) - floor(numeric_modifier('weapon damage percent') / 25 + 0.001);
     }
-/*
-    if (weapon_turns() >= 5) {
-        ensure_pull_effect($effect[Wasabi With You], $item[wasabi marble soda]);
-    }
-    if (weapon_turns() >= 5) {
-        ensure_pull_effect($effect[Seeing Red], $item[red eye]);
-    }
-
-    if (weapon_turns() >= 3 && have_effect($effect[Medieval Mage Mayhem]) == 0) {
-        cli_execute('cargo 617');
-    } */
 
     if (weapon_turns() > 2) {
         error('Something went wrong with weapon damage.');
@@ -1927,7 +1758,7 @@ if (!test_done(TEST_SPELL)) {
     do_test(TEST_SPELL);
 }
 
-set_property('autoSatisfyWithNPCs', get_property('_saved_autoSatisfyWithNPCs'));
+set_property('autoSatisfyWithNPCs', true);
 set_property('autoSatisfyWithCoinmasters', get_property('_saved_autoSatisfyWithCoinmasters'));
 set_property('hpAutoRecovery', '0.8');
 
@@ -1935,3 +1766,5 @@ cli_execute('mood default');
 cli_execute('ccs default');
 cli_execute('boombox food');
 cli_execute('/whitelist alliance from hell');
+
+print('This loop took '+((gametime_to_int()-START_TIME)/1000)+' seconds, for a 1 day, '+my_turncount()+' turn HCCS run.', 'green');
