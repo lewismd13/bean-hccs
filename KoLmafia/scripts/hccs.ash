@@ -405,10 +405,7 @@ if (!test_done(TEST_COIL_WIRE)) {
             cli_execute('numberology 69');
         }
     }
-
-	// make pantogram pants for -combat
-	cli_execute('pantogram hot|silent');
-
+    
     // retrieve_item(1, $item[fish hatchet]);
 
 	// get cowboy boots
@@ -430,6 +427,12 @@ if (!test_done(TEST_COIL_WIRE)) {
 
     // Buy toy accordion
     ensure_item(1, $item[toy accordion]);
+
+	// make pantogram pants for hilarity and spell damage
+    if (available_amount($item[pantogram pants]) == 0) {
+        retrieve_item(1, $item[ten-leaf clover]);
+	    cli_execute('pantogram hot|hilarity|silent');
+    }
 
     ensure_song($effect[The Magical Mojomuscular Melody]);
    
@@ -831,7 +834,7 @@ if (!test_done(TEST_HP)) {
     if(get_campground() contains $item[Witchess Set] && get_property("_witchessFights").to_int() < 5) {
 		equip($item[fourth of may cosplay saber]);
         use_default_familiar();
-		while(get_property("_witchessFights").to_int() < 4) {
+		while(get_property("_witchessFights").to_int() < 2) {
 	    set_hccs_combat_mode(MODE_KILL);
             visit_url("campground.php?action=witchess");
             run_choice(1);
@@ -839,7 +842,7 @@ if (!test_done(TEST_HP)) {
             run_combat();
             set_hccs_combat_mode(MODE_NULL);
 	}
-        while(get_property("_witchessFights").to_int() == 3) { // fight a witchess king for dented scepter
+        while(get_property("_witchessFights").to_int() == 2) { // fight a witchess king for dented scepter
 			set_auto_attack('witchess witch');
 			ensure_effect($effect[carol of the bulls]);
             visit_url("campground.php?action=witchess");
@@ -848,7 +851,7 @@ if (!test_done(TEST_HP)) {
             run_combat();
             set_auto_attack(0);
         }
-		while(get_property("_witchessFights").to_int() == 4) { // fight a witchess witch for battle broom
+		while(get_property("_witchessFights").to_int() == 3) { // fight a witchess witch for battle broom
 			set_auto_attack('witchess witch');
 			ensure_effect($effect[carol of the bulls]);
             visit_url("campground.php?action=witchess");
@@ -938,7 +941,19 @@ if (!test_done(TEST_HP)) {
         set_hccs_combat_mode(MODE_NULL);
     }
 
+    if (get_property("_witchessFights").to_int() == 4) { // fight a witchess queen for pointy crown
+			set_auto_attack('witchess witch');
+			ensure_effect($effect[carol of the bulls]);
+            visit_url("campground.php?action=witchess");
+            run_choice(1);
+            visit_url("choice.php?option=1&pwd="+my_hash()+"&whichchoice=1182&piece=1939", false);
+            run_combat();
+            set_auto_attack(0);
+        }
+
     use_default_familiar();
+
+    equip($slot[acc3], $item[Lil\' Doctor&trade; Bag]);
 
     // 17 free NEP fights
     while ((get_property_int('_neverendingPartyFreeTurns') < 10)
@@ -1051,7 +1066,7 @@ if (!test_done(TEST_HP)) {
     ensure_effect($effect[Disdain of the War Snapper]);
     ensure_npc_effect($effect[Go Get \'Em, Tiger!], 5, $item[Ben-Gal&trade; balm]);
 
-    use_familiar($familiar[Left-Hand Man]);
+    use_familiar($familiar[disembodied hand]);
 
     maximize('hp', false);
 
@@ -1068,9 +1083,9 @@ if (!test_done(TEST_MUS)) {
     else ensure_potion_effect($effect[Expert Oiliness], $item[oil of expertise]);
 
 	if (my_inebriety() == 0) {
-		ensure_ode(2);
+		ensure_ode(4);
 		try_use(1, $item[astral six-pack]);
-		drink(2, $item[astral pilsner]);
+		drink(4, $item[astral pilsner]);
 	}
 
     ensure_effect($effect[Big]);
@@ -1217,6 +1232,9 @@ if (!test_done(TEST_HOT_RES)) {
         ensure_potion_effect($effect[Sleazy Hands], $item[lotion of sleaziness]);
     }
 
+    // wish for healthy green glow, should fall through
+	wish_effect($effect[healthy green glow]);
+	
     ensure_effect($effect[Elemental Saucesphere]);
     ensure_effect($effect[Astral Shell]);
 
@@ -1243,14 +1261,14 @@ if (!test_done(TEST_HOT_RES)) {
     }
 
 	// drink a hot socks, should fall through to fam wt
-	if (have_effect($effect[1701]) == 0) { // hip to the jive
+	/*if (have_effect($effect[1701]) == 0) { // hip to the jive
         if (my_inebriety() > inebriety_limit() - 3) {
             error('Something went wrong. We are too drunk.');
         }
         assert_meat(5000);
         ensure_ode(3);
         cli_execute('drink Hot socks');		
-    }
+    } */
 
 
     // Beach comb buff.
@@ -1420,9 +1438,6 @@ if (!test_done(TEST_NONCOMBAT)) {
     // Rewards
     ensure_effect($effect[Throwing Some Shade]);
     // ensure_effect($effect[A Rose by Any Other Material]);
-	
-	// wish for healthy green glow, should fall through
-	wish_effect($effect[healthy green glow]);
 	
     use_familiar($familiar[Disgeist]);
 
@@ -1606,7 +1621,10 @@ if (!test_done(TEST_WEAPON)) {
     ensure_effect($effect[Disdain of the War Snapper]);
     ensure_effect($effect[Tenacity of the Snapper]);
     ensure_song($effect[Jackasses\' Symphony of Destruction]);
-    ensure_effect($effect[The Power of LOV]);
+    if (available_amount($item[lov elixir \#3]) > 0) {
+        ensure_effect($effect[The Power of LOV]);
+    }
+    
 
     if (available_amount($item[vial of hamethyst juice]) > 0) {
         ensure_effect($effect[Ham-Fisted]);
