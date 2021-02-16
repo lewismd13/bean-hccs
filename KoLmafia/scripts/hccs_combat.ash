@@ -162,6 +162,7 @@ string MODE_KILL = "kill";
 string MODE_OTOSCOPE = "otoscope";
 string MODE_RUN_UNLESS_FREE = "run";
 string MODE_MISTFORM = "mist";
+string MODE_FEEL_PRIDE = "pride";
 
 void set_hccs_combat_mode(string mode) {
     set_property("_hccsCombatMode", mode);
@@ -329,7 +330,23 @@ void main(int initround, monster foe, string page) {
 				.m_skill($skill[Become a Cloud of Mist])
                 .m_skill($skill[Use the Force])
 				.m_repeat_submit();
-	} else {
+	} else if (mode == MODE_FEEL_PRIDE) {
+        if (get_property_int('_feelPrideUsed') < 3) {
+            m_new()
+            .m_skill($skill[Curse of Weaksauce])
+            .m_skill($skill[Sing Along])
+            .m_skill($skill[feel pride])
+            .m_skill($skill[Saucegeyser])
+            .m_repeat_submit();
+        } else {
+        m_new()
+            .m_skill($skill[Curse of Weaksauce])
+            .m_skill($skill[Sing Along])
+            .m_skill($skill[feel pride])
+            .m_skill($skill[Saucegeyser])
+            .m_repeat_submit();
+        }
+    } else {
         abort("Unrecognized mode.");
     }
 

@@ -1,4 +1,4 @@
-// Script by worthawholebean. Public domain; feel free to modify or distribute.
+// Script originally by worthawholebean, heavily modified by Manendra. Public domain; feel free to modify or distribute.
 // This is a script to do 1-day Hardcore Community Service runs. See README.md for details.
 
 import <canadv.ash>
@@ -484,6 +484,16 @@ if (!test_done(TEST_HP)) {
 	// Grab fish hatchett here, for fam wt, -combat, and muscle tests
 	retrieve_item(1, $item[fish hatchet]);
 	
+    // pulls wrench from deck
+	if(get_property_int('_deckCardsDrawn') == 0) {
+		// cli_execute('cheat buff items');
+		// cli_execute('cheat rope');
+		cli_execute('cheat wrench');
+	}
+
+    cli_execute('call detective_solver.ash');
+	buy(1, $item[shoe gum]);
+	
 	// learn extract and digitize
 	cli_execute('terminal educate extract');
 	cli_execute('terminal educate digitize');
@@ -614,6 +624,7 @@ if (!test_done(TEST_HP)) {
     ensure_effect($effect[Favored by Lyle]);
     ensure_effect($effect[Starry-Eyed]);
     ensure_effect($effect[Triple-Sized]);
+    ensure_effect($effect[Feeling Excited]);
     ensure_song($effect[The Magical Mojomuscular Melody]);
     ensure_npc_effect($effect[Glittering Eyelashes], 5, $item[glittery mascara]);
 	
@@ -966,6 +977,7 @@ if (!test_done(TEST_HP)) {
 		ensure_effect($effect[pride of the puffin]);
 		ensure_effect($effect[drescher\'s annoying noise]);
         ensure_song($effect[ur-kel\'s aria of annoyance]);
+        ensure_effect($effect[Feeling Excited]);
 		
         cli_execute('mood execute');
         
@@ -979,7 +991,11 @@ if (!test_done(TEST_HP)) {
         // }
 
         ensure_mp_sausage(100);
-        if (get_property_int('_neverendingPartyFreeTurns') < 10) {
+        if (get_property_int('_neverendingPartyFreeTurns') < 3) {
+            set_hccs_combat_mode(MODE_FEEL_PRIDE);
+            adv1($location[The Neverending Party], -1, '');
+            set_hccs_combat_mode(MODE_NULL);
+        } else if (get_property_int('_neverendingPartyFreeTurns') < 10) {
             adventure_kill($location[The Neverending Party]);
         } else {
             adventure_free_kill($location[The Neverending Party]);
@@ -1054,7 +1070,7 @@ if (!test_done(TEST_HP)) {
     if (my_class() == $class[Pastamancer]) use_skill(1, $skill[Bind Undead Elbow Macaroni]);
     else ensure_potion_effect($effect[Expert Oiliness], $item[oil of expertise]);
 
-    synthesis_plan($effect[Synthesis: Strong], tail(tail(subsequent)));
+    // synthesis_plan($effect[Synthesis: Strong], tail(tail(subsequent)));
 
     // ensure_effect($effect[Gr8ness]);
     // ensure_effect($effect[Tomato Power]);
@@ -1108,6 +1124,9 @@ if (!test_done(TEST_MUS)) {
 		error('Not enough moxie to cap.');
 	}
 	
+    // cli_execute('modtrace mus');
+    // abort();
+
     do_test(TEST_MUS);
 }
 
@@ -1139,6 +1158,9 @@ if (!test_done(TEST_MOX)) {
 
     use(1, $item[Bird-a-Day Calendar]);
     ensure_effect($effect[Blessing of the Bird]);
+
+    // Should be 11% NC and 50% moxie, will fall through to NC test
+    ensure_effect($effect[Blessing of your favorite Bird]);
 
     ensure_effect($effect[Big]);
     ensure_effect($effect[Song of Bravado]);
@@ -1205,6 +1227,7 @@ if (!test_done(TEST_HOT_RES)) {
     ensure_effect($effect[Blood Bond]);
     ensure_effect($effect[Leash of Linguini]);
     ensure_effect($effect[Empathy]);
+    ensure_effect($effect[feeling peaceful]);
 
     // Pool buff. This will fall through to fam weight.
     ensure_effect($effect[Billiards Belligerence]);
@@ -1233,7 +1256,7 @@ if (!test_done(TEST_HOT_RES)) {
     }
 
     // wish for healthy green glow, should fall through
-	wish_effect($effect[healthy green glow]);
+	// wish_effect($effect[healthy green glow]);
 	
     ensure_effect($effect[Elemental Saucesphere]);
     ensure_effect($effect[Astral Shell]);
@@ -1295,7 +1318,7 @@ if (!test_done(TEST_HOT_RES)) {
         cli_execute('pillkeeper elemental');
     }
 */
-    if (round(numeric_modifier('hot resistance')) < 58) {
+    if (round(numeric_modifier('hot resistance')) < 59) {
         error('Something went wrong building hot res.');
     }
 
@@ -1304,99 +1327,6 @@ if (!test_done(TEST_HOT_RES)) {
 
     do_test(TEST_HOT_RES);
 
-}
-
-if (!test_done(TEST_ITEM)) {
-    ensure_mp_sausage(500);
-
-    fight_sausage_if_guaranteed();
-
-    autosell(1, $item[lava-proof pants]);
-    autosell(1, $item[heat-resistant gloves]);
-
-	//getting a lil ninja costume for the tot
-	if ((available_amount($item[9140]) == 0) && (get_property_int('_shatteringPunchUsed') < 3)) {
-		set_hccs_combat_mode(MODE_CUSTOM,
-            m_new()
-                .m_skill($skill[shattering punch]));
-		c2t_cartographyHunt($location[The Haiku Dungeon], $monster[716]);
-		run_combat();
-		set_hccs_combat_mode(MODE_NULL);
-		set_location($location[none]);
-	}
-	
-	cli_execute('call detective_solver.ash');
-	buy(1, $item[shoe gum]);
-	
-	// use abstraction: certainty if you have it
-	if ((available_amount($item[abstraction: certainty]) > 0) && (have_effect($effect[certainty]) == 0)) {
-		chew($item[abstraction: certainty]);
-	}
-		
-	// pulls wheel of fortune from deck, gets rope and wrench for later
-	if(get_property_int('_deckCardsDrawn') == 0) {
-		cli_execute('cheat buff items');
-		// cli_execute('cheat rope');
-		cli_execute('cheat wrench');
-	}
-	// get pirate DNA and make a gene tonic
-	if ((get_property('dnaSyringe') != 'pirate') && (have_effect($effect[Human-Pirate Hybrid]) == 0)) {
-		equip($slot[acc1], $item[Kremlin\'s Greatest Briefcase]);
-		if (get_property_int('_kgbTranquilizerDartUses') >= 3) {
-			error('Out of KGB banishes');
-		}
-		adv1($location[Pirates of the Garbage Barges], -1, '');
-		adventure_macro($location[Pirates of the Garbage Barges],
-            m_new().m_item($item[DNA extraction syringe]).m_skill($skill[KGB tranquilizer dart]));
-		gene_tonic('pirate');
-		ensure_effect($effect[Human-Pirate Hybrid]);
-	}
-
-    if (have_effect($effect[Bat-Adjacent Form]) == 0) {
-        if (get_property_int('_reflexHammerUsed') >= 3) error('Out of reflex hammers!');
-        equip($slot[acc3], $item[Lil\' Doctor&trade; Bag]);
-        adventure_macro($location[The Neverending Party],
-            m_new().m_skill($skill[Become a Bat]).m_skill($skill[Reflex Hammer]));
-    }
-
-    if (!get_property_boolean('_clanFortuneBuffUsed')) {
-        ensure_effect($effect[There\'s No N In Love]);
-    }
-
-    ensure_effect($effect[Fat Leon\'s Phat Loot Lyric]);
-    ensure_effect($effect[Singer\'s Faithful Ocelot]);
-    ensure_effect($effect[The Spirit of Taking]);
-    ensure_effect($effect[items.enh]);
-
-    effect[int] subsequent;
-    synthesis_plan($effect[Synthesis: Collection], subsequent);
-
-	// see what class we are, maybe a couple other buffs 
-	if (my_class() == $class[pastamancer]) {
-		cli_execute('barrelprayer buff');
-	} else if (my_class() == $class[sauceror]) {
-		use_skill(1, $skill[7323]); // seek out a bird
-	}
-
-    // Use bag of grain.
-    // 	ensure_effect($effect[Nearly All-Natural]);
-
-    ensure_effect($effect[Steely-Eyed Squint]);
-
-    if (get_property_int('_campAwaySmileBuffs') == 1) {
-        // See if we can get Big Smile of the Blender.
-        visit_url('place.php?whichplace=campaway&action=campaway_sky');
-    }
-	
-    use_familiar($familiar[Trick-or-Treating Tot]);
-	equip($item[9140]); // ninja costume for 150% item
-
-    maximize('item, 2 booze drop, -equip broken champagne bottle, -equip surprisingly capacious handbag', false);
-	
-	// cli_execute('modtrace item');
-	// abort();
-	
-    do_test(TEST_ITEM);
 }
 
 if (!test_done(TEST_NONCOMBAT)) {
@@ -1431,9 +1361,6 @@ if (!test_done(TEST_NONCOMBAT)) {
     ensure_effect($effect[Smooth Movements]);
     ensure_effect($effect[Invisible Avatar]);
     ensure_effect($effect[Silent Running]);
-
-	// Should be 11% NC for now.
-    ensure_effect($effect[Blessing of your favorite Bird]);
 
     // Rewards
     ensure_effect($effect[Throwing Some Shade]);
@@ -1774,6 +1701,96 @@ if (!test_done(TEST_SPELL)) {
 	// abort();
 	
     do_test(TEST_SPELL);
+}
+
+if (!test_done(TEST_ITEM)) {
+    ensure_mp_sausage(500);
+
+    fight_sausage_if_guaranteed();
+
+    autosell(1, $item[lava-proof pants]);
+    autosell(1, $item[heat-resistant gloves]);
+
+	//getting a lil ninja costume for the tot
+	if ((available_amount($item[9140]) == 0) && (get_property_int('_shatteringPunchUsed') < 3)) {
+		set_hccs_combat_mode(MODE_CUSTOM,
+            m_new()
+                .m_skill($skill[shattering punch]));
+		c2t_cartographyHunt($location[The Haiku Dungeon], $monster[716]);
+		run_combat();
+		set_hccs_combat_mode(MODE_NULL);
+		set_location($location[none]);
+	}
+	
+	// use abstraction: certainty if you have it
+	/* if ((available_amount($item[abstraction: certainty]) > 0) && (have_effect($effect[certainty]) == 0)) {
+		chew($item[abstraction: certainty]);
+	} */
+		
+	// pulls wheel of fortune from deck, gets rope and wrench for later
+	if(get_property_int('_deckCardsDrawn') == 5) {
+		cli_execute('cheat buff items');
+	}
+	// get pirate DNA and make a gene tonic
+	if ((get_property('dnaSyringe') != 'pirate') && (have_effect($effect[Human-Pirate Hybrid]) == 0)) {
+		equip($slot[acc1], $item[Kremlin\'s Greatest Briefcase]);
+		if (get_property_int('_kgbTranquilizerDartUses') >= 3) {
+			error('Out of KGB banishes');
+		}
+		adv1($location[Pirates of the Garbage Barges], -1, '');
+		adventure_macro($location[Pirates of the Garbage Barges],
+            m_new().m_item($item[DNA extraction syringe]).m_skill($skill[KGB tranquilizer dart]));
+		gene_tonic('pirate');
+		ensure_effect($effect[Human-Pirate Hybrid]);
+	}
+
+    if (have_effect($effect[Bat-Adjacent Form]) == 0) {
+        if (get_property_int('_reflexHammerUsed') >= 3) error('Out of reflex hammers!');
+        equip($slot[acc3], $item[Lil\' Doctor&trade; Bag]);
+        adventure_macro($location[The Neverending Party],
+            m_new().m_skill($skill[Become a Bat]).m_skill($skill[Reflex Hammer]));
+    }
+
+    if (!get_property_boolean('_clanFortuneBuffUsed')) {
+        ensure_effect($effect[There\'s No N In Love]);
+    }
+
+    ensure_effect($effect[Fat Leon\'s Phat Loot Lyric]);
+    ensure_effect($effect[Singer\'s Faithful Ocelot]);
+    ensure_effect($effect[The Spirit of Taking]);
+    ensure_effect($effect[items.enh]);
+
+    effect[int] subsequent;
+    synthesis_plan($effect[Synthesis: Collection], subsequent);
+
+	// see what class we are, maybe a couple other buffs 
+	if (my_class() == $class[pastamancer]) {
+		cli_execute('barrelprayer buff');
+	} else if (my_class() == $class[sauceror]) {
+		use_skill(1, $skill[7323]); // seek out a bird
+	}
+
+    // Use bag of grain.
+    // 	ensure_effect($effect[Nearly All-Natural]);
+
+    ensure_effect($effect[Feeling Lost]);
+    ensure_effect($effect[Steely-Eyed Squint]);
+
+    if (get_property_int('_campAwaySmileBuffs') == 1) {
+        // See if we can get Big Smile of the Blender.
+        visit_url('place.php?whichplace=campaway&action=campaway_sky');
+    }
+	
+    use_familiar($familiar[Trick-or-Treating Tot]);
+	equip($item[9140]); // ninja costume for 150% item
+
+    maximize('item, 2 booze drop, -equip broken champagne bottle, -equip surprisingly capacious handbag', false);
+	
+	// cli_execute('modtrace item');
+	// abort();
+	
+    do_test(TEST_ITEM);
+
 }
 
 set_property('autoSatisfyWithNPCs', true);
