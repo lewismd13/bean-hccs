@@ -991,7 +991,7 @@ if (!test_done(TEST_HP)) {
         // }
 
         ensure_mp_sausage(100);
-        if (get_property_int('_neverendingPartyFreeTurns') < 3) {
+        if ((get_property_int('_neverendingPartyFreeTurns') < 10) && (get_property_int('_feelPrideUsed') < 3)) {
             set_hccs_combat_mode(MODE_FEEL_PRIDE);
             adv1($location[The Neverending Party], -1, '');
             set_hccs_combat_mode(MODE_NULL);
