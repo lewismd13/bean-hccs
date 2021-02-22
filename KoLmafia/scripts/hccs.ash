@@ -422,7 +422,7 @@ if (!test_done(TEST_COIL_WIRE)) {
     try_use(1, $item[letter from King Ralph XI]);
     try_use(1, $item[pork elf goodies sack]);
     autosell(5, $item[baconstone]);
-    autosell(5, $item[porquoise]);
+    // autosell(5, $item[porquoise]);
     autosell(5, $item[hamethyst]);
 
     // Buy toy accordion
@@ -1065,7 +1065,7 @@ if (!test_done(TEST_HP)) {
     }
 
     // Reset location so maximizer doesn't get confused.
-    set_location($location[none]);
+    // set_location($location[none]);
 
     if (my_class() == $class[Pastamancer]) use_skill(1, $skill[Bind Undead Elbow Macaroni]);
     else ensure_potion_effect($effect[Expert Oiliness], $item[oil of expertise]);
@@ -1151,7 +1151,7 @@ if (!test_done(TEST_MOX)) {
     else ensure_potion_effect($effect[Expert Oiliness], $item[oil of expertise]);
 
     effect[int] subsequent = { $effect[Synthesis: Collection] };
-    synthesis_plan($effect[Synthesis: Cool], subsequent);
+    // synthesis_plan($effect[Synthesis: Cool], subsequent);
 
     // Beach Comb
     ensure_effect($effect[Pomp & Circumsands]);
@@ -1361,7 +1361,8 @@ if (!test_done(TEST_NONCOMBAT)) {
     ensure_effect($effect[Smooth Movements]);
     ensure_effect($effect[Invisible Avatar]);
     ensure_effect($effect[Silent Running]);
-
+    ensure_effect($effect[Feeling Lonely]);
+  
     // Rewards
     ensure_effect($effect[Throwing Some Shade]);
     // ensure_effect($effect[A Rose by Any Other Material]);
@@ -1544,7 +1545,7 @@ if (!test_done(TEST_WEAPON)) {
     ensure_effect($effect[Song of the North]);
     ensure_effect($effect[Rage of the Reindeer]);
     ensure_effect($effect[Frenzied, Bloody]);
-    // ensure_effect($effect[Scowl of the Auk]);
+    ensure_effect($effect[Scowl of the Auk]);
     ensure_effect($effect[Disdain of the War Snapper]);
     ensure_effect($effect[Tenacity of the Snapper]);
     ensure_song($effect[Jackasses\' Symphony of Destruction]);
@@ -1595,12 +1596,6 @@ if (!test_done(TEST_WEAPON)) {
 
     ensure_effect($effect[Bow-Legged Swagger]);
 
-    // Get flimsy hardwood scraps.
-    visit_url('shop.php?whichshop=lathe');
-    if (available_amount($item[flimsy hardwood scraps]) > 0) {
-        retrieve_item(1, $item[ebony epee]);
-    }
-	
 	use_familiar($familiar[disembodied hand]);
 	
     maximize('weapon damage', false);
@@ -1644,6 +1639,12 @@ if (!test_done(TEST_SPELL)) {
         ensure_effect($effect[Baconstoned]);
     }
 
+    // Get flimsy hardwood scraps.
+    visit_url('shop.php?whichshop=lathe');
+    if (available_amount($item[flimsy hardwood scraps]) > 0) {
+        retrieve_item(1, $item[weeping willow wand]);
+    }
+	
     ensure_item(1, $item[obsidian nutcracker]);
 
 	// Get inner elf for spell damage
