@@ -1,20 +1,12 @@
 buy(1, $item[foreign language tapes]);
-buy(1, $item[continental juice bar]);
+buy(1, $item[swiss piggy bank]);
 buy(1, $item[ceiling fan]);
 
-cli_execute("uberpvpoptimizer");
+use(1, $item[peppermint pip packet]);
+take_stash(1, $item[little geneticist DNA-splicing lab]);
+use(1, $item[little geneticist DNA-splicing lab]);
 
-visit_url('peevpee.php?action=smashstone&confirm=on');
-print('Stone smashed.');
-
-use(3, $item[meteorite-ade]);
-use(1, $item[School of Hard Knocks Diploma]);
 
 if (pvp_attacks_left() > 0) {
-    /* while (have_effect($effect[Song of Sauce]) < pvp_attacks_left()) {
-        use_skill(1, $skill[Song of Sauce]);
-    } */
-
-    // replace with whatever this season's karma game is
-    cli_execute('pvp fame noel');
+    cli_execute('pvp loot kar');
 }

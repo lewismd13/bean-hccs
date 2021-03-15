@@ -599,6 +599,11 @@ if (!test_done(TEST_HP)) {
         use_skill(1, $skill[Summon Crimbo Candy]);
     }
 
+    if (available_amount($item[crimbo candied pecan]) == 3) {
+        use_skill(1, $skill[summon sugar sheets]);
+        cli_execute('create 1 sugar shotgun');
+    }
+
     // This is the sequence of synthesis effects; synthesis_plan will, if possible, come up with a plan for allocating candy to each of these.
     effect[int] subsequent = { $effect[Synthesis: Smart], $effect[Synthesis: Strong], $effect[Synthesis: Cool], $effect[Synthesis: Collection] };
     synthesis_plan($effect[Synthesis: Learning], subsequent);
@@ -951,10 +956,11 @@ if (!test_done(TEST_HP)) {
         if (handling_choice()) run_choice(1);
         set_hccs_combat_mode(MODE_NULL);
     }
-
-    if (get_property("_witchessFights").to_int() == 4) { // fight a witchess queen for pointy crown
+// fight a witchess queen for pointy crown, getting a couple weapon damage effects just in case
+    if (get_property("_witchessFights").to_int() == 4) { 
 			set_auto_attack('witchess witch');
 			ensure_effect($effect[carol of the bulls]);
+            ensure_effect($effect[song of the north]);
             visit_url("campground.php?action=witchess");
             run_choice(1);
             visit_url("choice.php?option=1&pwd="+my_hash()+"&whichchoice=1182&piece=1939", false);
@@ -1305,11 +1311,12 @@ if (!test_done(TEST_HOT_RES)) {
     // ensure_asdon_effect($effect[Driving Safely]);
 
     use_familiar($familiar[Exotic Parrot]);
-   if (available_amount($item[cracker]) == 0) {
+   if ((available_amount($item[cracker]) == 0) && (get_property_int('tomeSummons') < 3)) {
         retrieve_item(1, $item[box of Familiar jacks]);
         use(1, $item[box of Familiar Jacks]);
+        equip($item[cracker]);
     }
-    equip($item[cracker]);
+    
 
     // Mafia sometimes can't figure out that multiple +weight things would get us to next tier.
     maximize('hot res, 0.01 familiar weight', false);
@@ -1711,6 +1718,9 @@ if (!test_done(TEST_ITEM)) {
 
     autosell(1, $item[lava-proof pants]);
     autosell(1, $item[heat-resistant gloves]);
+
+    // kramco messes up maps
+    equip($slot[off-hand], $item[none]);
 
 	//getting a lil ninja costume for the tot
 	if ((available_amount($item[9140]) == 0) && (get_property_int('_shatteringPunchUsed') < 3)) {
