@@ -18,6 +18,18 @@ int TEST_ITEM = 9;
 int TEST_HOT_RES = 10;
 int TEST_COIL_WIRE = 11;
 
+int HP_TURNS = 0;
+int MUS_TURNS = 0;
+int MYS_TURNS = 0;
+int MOX_TURNS = 0;
+int FAMILIAR_TURNS = 0;
+int WEAPON_TURNS = 0;
+int SPELL_TURNS = 0;
+int NONCOMBAT_TURNS = 0;
+int ITEM_TURNS = 0;
+int HOT_RES_TURNS = 0;
+int TEMP_TURNS = 0;
+
 // test order will be stats, hot, item, NC, Fam, weapon, spell
 
 int START_TIME = gametime_to_int();
@@ -1096,8 +1108,9 @@ if (!test_done(TEST_HP)) {
     if (my_maxhp() - my_buffedstat($stat[muscle]) - 3 < 1770) {
         error('Not enough HP to cap.');
     }
-
+    TEMP_TURNS = my_turncount();
     do_test(TEST_HP);
+    HP_TURNS = (my_turncount() - TEMP_TURNS);
 }
 
 if (!test_done(TEST_MUS)) {
@@ -1132,8 +1145,9 @@ if (!test_done(TEST_MUS)) {
 	
     // cli_execute('modtrace mus');
     // abort();
-
+    TEMP_TURNS = my_turncount();
     do_test(TEST_MUS);
+    MUS_TURNS = (my_turncount() - TEMP_TURNS);
 }
 
 if (!test_done(TEST_MYS)) {
@@ -1149,7 +1163,9 @@ if (!test_done(TEST_MYS)) {
     if (my_buffedstat($stat[mysticality]) - my_basestat($stat[mysticality]) < 1770) {
         error('Not enough mysticality to cap.');
     }
+    TEMP_TURNS = my_turncount();
     do_test(TEST_MYS);
+    MYS_TURNS = (my_turncount() - TEMP_TURNS);
 }
 
 if (!test_done(TEST_MOX)) {
@@ -1185,8 +1201,10 @@ if (!test_done(TEST_MOX)) {
     } else if ((my_buffedstat($stat[moxie]) - my_basestat($stat[moxie]) < 1770)) {
 		error('Not enough moxie to cap.');
 	}
-	
+
+	TEMP_TURNS = my_turncount();
     do_test(TEST_MOX);
+    MOX_TURNS = (my_turncount() - TEMP_TURNS);
 }
 
 if (!test_done(TEST_HOT_RES)) {
@@ -1331,8 +1349,9 @@ if (!test_done(TEST_HOT_RES)) {
 
 	// cli_execute('modtrace Hot Resistance');
 	// abort();
-
+    TEMP_TURNS = my_turncount();
     do_test(TEST_HOT_RES);
+    HOT_RES_TURNS = (my_turncount() - TEMP_TURNS);
 
 }
 
@@ -1389,8 +1408,9 @@ if (!test_done(TEST_NONCOMBAT)) {
 	
 	// cli_execute('modtrace combat rate');
 	// abort();
-	
+	TEMP_TURNS = my_turncount();
     do_test(TEST_NONCOMBAT);
+    NONCOMBAT_TURNS = (my_turncount() - TEMP_TURNS);
 }
 
 if (!test_done(TEST_FAMILIAR)) {
@@ -1433,8 +1453,9 @@ if (!test_done(TEST_FAMILIAR)) {
 
 	// cli_execute('modtrace familiar weight');
 	// abort();
-
+    TEMP_TURNS = my_turncount();
     do_test(TEST_FAMILIAR);
+    FAMILIAR_TURNS = (my_turncount() - TEMP_TURNS);
 }
 
 if (!test_done(TEST_WEAPON)) {
@@ -1617,8 +1638,9 @@ if (!test_done(TEST_WEAPON)) {
 
 	// cli_execute('modtrace weapon damage');
 	// abort();
-
+    TEMP_TURNS = my_turncount();
     do_test(TEST_WEAPON);
+    WEAPON_TURNS = (my_turncount() - TEMP_TURNS);
 }
 
 if (!test_done(TEST_SPELL)) {
@@ -1629,7 +1651,10 @@ if (!test_done(TEST_SPELL)) {
     ensure_effect($effect[Carol of the Hells]);
     ensure_effect($effect[Arched Eyebrow of the Archmage]);
     ensure_song($effect[Jackasses\' Symphony of Destruction]);
-    ensure_effect($effect[The Magic of LOV]);
+    if (available_amount($item[lov elixir \#6]) > 0) {
+        ensure_effect($effect[The Magic of LOV]);
+    }
+    
     // Pool buff
     ensure_effect($effect[Mental A-cue-ity]);
 
@@ -1707,8 +1732,9 @@ if (!test_done(TEST_SPELL)) {
 	
 	// cli_execute('modtrace spell damage');
 	// abort();
-	
+	TEMP_TURNS = my_turncount();
     do_test(TEST_SPELL);
+    SPELL_TURNS = (my_turncount() - TEMP_TURNS);
 }
 
 if (!test_done(TEST_ITEM)) {
@@ -1799,8 +1825,9 @@ if (!test_done(TEST_ITEM)) {
 	
 	// cli_execute('modtrace item');
 	// abort();
-	
+	TEMP_TURNS = my_turncount();
     do_test(TEST_ITEM);
+    ITEM_TURNS = (my_turncount() - TEMP_TURNS);
 
 }
 
@@ -1813,4 +1840,23 @@ cli_execute('ccs default');
 cli_execute('boombox food');
 cli_execute('/whitelist alliance from hell');
 
-print('This loop took '+((gametime_to_int()-START_TIME)/1000)+' seconds, for a 1 day, '+my_turncount()+' turn HCCS run.', 'green');
+visit_url('peevpee.php?action=smashstone&confirm=on'); 
+print('Stone smashed. Get your PVP on!', 'green');
+// spar for 6 fights
+if (get_property("_daycareRecruits").to_int() == 0 && hippy_stone_broken() == true) {
+  visit_url("place.php?whichplace=town_wrong&action=townwrong_boxingdaycare"); run_choice(3); run_choice(1); run_choice(4); run_choice(5); run_choice(4);
+}
+
+cli_execute('pvp fame karmic battle');
+
+print('This loop took '+((gametime_to_int()-START_TIME)/1000)+' seconds, for a 1 day, ' + (my_turncount() - 1) + ' turn HCCS run.', 'green');
+print('HP test: ' + HP_TURNS, 'green');
+print('Muscle test: ' + MUS_TURNS, 'green');
+print('Moxie test: ' + MOX_TURNS, 'green');
+print('Myst test: ' + MYS_TURNS, 'green');
+print('Hot Res test: ' + HOT_RES_TURNS, 'green');
+print('Noncombat test: ' + NONCOMBAT_TURNS, 'green');
+print('Fam Weight test: ' + FAMILIAR_TURNS, 'green');
+print('Weapon Damage test: ' + WEAPON_TURNS, 'green');
+print('Spell Damage Test: ' + SPELL_TURNS, 'green');
+print('Item Drop test: ' + ITEM_TURNS, 'green');
