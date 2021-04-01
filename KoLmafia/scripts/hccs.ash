@@ -1679,6 +1679,8 @@ if (!test_done(TEST_SPELL)) {
 	
     ensure_item(1, $item[obsidian nutcracker]);
 
+    cli_execute('briefcase e spell');
+
 	// Get inner elf for spell damage
 	if ((have_effect($effect[inner elf]) == 0) && (get_property_int('_snokebombUsed') < 3)) {        	
 		cli_execute("/whitelist hobopolis vacation home");
@@ -1831,6 +1833,7 @@ if (!test_done(TEST_ITEM)) {
 
 }
 
+use_skill(1, $skill[spirit of nothing]);
 set_property('autoSatisfyWithNPCs', true);
 set_property('autoSatisfyWithCoinmasters', get_property('_saved_autoSatisfyWithCoinmasters'));
 set_property('hpAutoRecovery', '0.8');
