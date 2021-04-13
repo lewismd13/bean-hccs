@@ -440,10 +440,10 @@ if (!test_done(TEST_COIL_WIRE)) {
     // Buy toy accordion
     ensure_item(1, $item[toy accordion]);
 
-	// make pantogram pants for hilarity and spell damage
+	// make pantogram pants for -combat and spell damage
     if (available_amount($item[pantogram pants]) == 0) {
-        retrieve_item(1, $item[ten-leaf clover]);
-	    cli_execute('pantogram hot|hilarity|silent');
+        // retrieve_item(1, $item[ten-leaf clover]);
+	    cli_execute('pantogram hot|-combat|silent');
     }
 
     ensure_song($effect[The Magical Mojomuscular Melody]);
@@ -916,6 +916,17 @@ if (!test_done(TEST_HP)) {
 		error('YOU FUCKED UP THE KRAMCO CHAIN AGAIN, YOU DUMBASS! Go kill crayon elves instead.');
 	}
 
+    // fight 11 kramcos, take off garbage shirt and kramco, since you can't back up to the same mob and want to save shirt for NEP
+    use_default_familiar();
+    equip($slot[acc2], $item[backup camera]);
+    equip($slot[shirt], $item[none]);
+    equip($slot[offhand], $item[none]);
+    set_auto_attack('backupbishops');
+    while ((get_property('feelNostalgicMonster') == 'sausage goblin') && (get_property_int('_backUpUses') < 11)) {
+        adv1($location[Noob Cave], -1, "");
+    }
+    set_auto_attack(0);
+
     // Breakfast
 
     // Visiting Looking Glass in clan VIP lounge
@@ -956,6 +967,7 @@ if (!test_done(TEST_HP)) {
 
     cli_execute('mood hccs');
 
+    equip($item[makeshift garbage shirt]);
     use_familiar($familiar[God Lobster]);
     while (get_property('_godLobsterFights') < 2) {
         // Get equipment from the fight.
@@ -1182,7 +1194,7 @@ if (!test_done(TEST_MOX)) {
     ensure_effect($effect[Blessing of the Bird]);
 
     // Should be 11% NC and 50% moxie, will fall through to NC test
-    ensure_effect($effect[Blessing of your favorite Bird]);
+    // ensure_effect($effect[Blessing of your favorite Bird]);
 
     ensure_effect($effect[Big]);
     ensure_effect($effect[Song of Bravado]);
@@ -1390,9 +1402,9 @@ if (!test_done(TEST_NONCOMBAT)) {
     ensure_effect($effect[Feeling Lonely]);
   
     // Rewards
-    ensure_effect($effect[Throwing Some Shade]);
+    // ensure_effect($effect[Throwing Some Shade]);
     // ensure_effect($effect[A Rose by Any Other Material]);
-	
+	wish_effect($effect[disquiet riot]);
     use_familiar($familiar[Disgeist]);
 
     // Pastamancer d1 is -combat.
@@ -1555,7 +1567,7 @@ if (!test_done(TEST_WEAPON)) {
 		}
     }
 
-
+/*
     if (have_effect($effect[In a Lather]) == 0) {
         if (my_inebriety() > inebriety_limit() - 2) {
             error('Something went wrong. We are too drunk.');
@@ -1564,7 +1576,7 @@ if (!test_done(TEST_WEAPON)) {
         ensure_ode(2);
         cli_execute('drink Sockdollager');
     }
-
+*/
     if (available_amount($item[twinkly nuggets]) > 0) {
         ensure_effect($effect[Twinkly Weapon]);
     }
@@ -1608,6 +1620,8 @@ if (!test_done(TEST_WEAPON)) {
 
     // Pool buff. Should have fallen through.
     ensure_effect($effect[Billiards Belligerence]);
+
+    ensure_effect($effect[Blessing of your favorite Bird]);
 
     // Corrupted marrow
     ensure_effect($effect[Cowrruption]);
