@@ -1402,9 +1402,9 @@ if (!test_done(TEST_NONCOMBAT)) {
     ensure_effect($effect[Feeling Lonely]);
   
     // Rewards
-    // ensure_effect($effect[Throwing Some Shade]);
+    ensure_effect($effect[Throwing Some Shade]);
     // ensure_effect($effect[A Rose by Any Other Material]);
-	wish_effect($effect[disquiet riot]);
+	// wish_effect($effect[disquiet riot]);
     use_familiar($familiar[Disgeist]);
 
     // Pastamancer d1 is -combat.

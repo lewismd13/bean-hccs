@@ -1,6 +1,6 @@
 This is a Kingdom of Loathing script originally written by `worthawholebean (#1972588)` (`ikzann#8468` on Discord) to do 1-day Hardcore Community Service runs as a Pastamancer in the Wallaby moon sign. I, `Manendra (#1483803)` (`avocadoplex#2474` on Discord), forked it and made a bunch of really ugly and clumsy changes to make it fit what I wanted. 
 
-With my set of IotMs and changes, this script can do a 1-day HCCS run as a Pastamancer or Sauceror in roughly 110 turns, using no stomach, 6 liver (of which 4 are astral pilsners), and 4 spleen.
+With my set of IotMs and changes, this script can do a 1-day HCCS run as a Pastamancer or Sauceror in roughly 110 turns, using no stomach, 4 liver (all of which are astral pilsners), and 4 spleen.
 
 To install:
 `svn checkout https://github.com/lewismd13/bean-hccs/branches/DNA/KoLmafia`
@@ -51,6 +51,8 @@ IotMs that this script uses include, but are not limited to:
 - Tunnel of L.O.V.E.
 - Retrocape
 - Genie
+- backup camera
+- emotion chip
 
 The script is fine to run twice; if it breaks somewhere, fix the problem manually and then the script should start where it left off. I have tested it, but not extensively, so please understand that this code is not at the same quality level as autoscend. It may very well mess up spectacularly, and it has done so at times in my runs. You have been warned.
 

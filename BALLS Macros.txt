@@ -58,3 +58,10 @@ repeat
 skill extract
 use DNA extraction syringe
 runaway
+
+- backupbishops
+
+skill curse of weaksauce
+skill back-up to your last enemy
+skill saucestorm
+repeat
