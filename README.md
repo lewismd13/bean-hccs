@@ -1,4 +1,6 @@
-This is a Kingdom of Loathing script originally written by `worthawholebean (#1972588)` (`ikzann#8468` on Discord) to do 1-day Hardcore Community Service runs as a Pastamancer in the Wallaby moon sign. I, `Manendra (#1483803)` (`avocadoplex#2474` on Discord), forked it and made a bunch of really ugly and clumsy changes to make it fit what I wanted. 
+THIS SCRIPT IS NO LONGER BEING ACTIVELY UPDATED OR SUPPORTED AS OF APRIL 2021. See https://github.com/lewismd13/manny-hccs for the current version, converted to typescript.
+
+This is a Kingdom of Loathing script originally written by `worthawholebean (#1972588)` (`ikzann#8468` on Discord) to do 1-day Hardcore Community Service runs as a Pastamancer in the Wallaby moon sign. I, `Manendra (#1483803)` (`avocadoplex#2474` on Discord), forked it and made a bunch of really ugly and clumsy changes to make it fit what I wanted.
 
 With my set of IotMs and changes, this script can do a 1-day HCCS run as a Pastamancer or Sauceror in roughly 110 turns, using no stomach, 4 liver (all of which are astral pilsners), and 4 spleen.
 
@@ -6,6 +8,7 @@ To install:
 `svn checkout https://github.com/lewismd13/bean-hccs/branches/DNA/KoLmafia`
 
 Notes:
+
 - The script assumes that you have Sweet Synthesis and a bunch of IotMs, but none of them are strictly necessary; if you are missing more than one or two of the leveling ones in particular (Prof/Kramco, NEP, Garbage Tote), the script will fail to level enough to cap the stat tests. That will very likely mean missing daycount. If you are missing Synth, you can compensate by wishing for Experimental Effect G-9 or New and Improved to replace the +Myst buff (depending on the day), and Different Way of Seeing Things to replace the XP buff. You can still make 1-day using that plan but it will be tight.
 - For candy, the script assumes that you have access to Peppermint Garden and the Crimbo Candy Cookbook (it also gets the Stocking Mimic's bag of many confections, but this is only one piece). It will plan around other candy sources if you add code to harvest them.
 - This script uses Little Geneticist DNA-splicing lab as a workshed item, since it provides familiar weight, spell damage, and item drop without taking up valuable organ space.
@@ -63,6 +66,7 @@ You'll need to set up a mood named "hccs" with whatever you have (+ML, +stats, +
 THE BELOW HASN'T BEEN UPDATED YET AND IS NOT ACCURATE
 
 The script follows this rough plan (list skips many steps):
+
 - Ascend Pastamancer/Wallaby. No pet needed if you have Pizza Cube, as the script will pizza for fam equipment. You can take the astral mask if you want to save one and a third turns on the item test and you aren't capping that test already.
 - Cast inscrutable gaze and use Bastille.
 - Rest twice at Chateau to reach Level 5 and restore MP.
